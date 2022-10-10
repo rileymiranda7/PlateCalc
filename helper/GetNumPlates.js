@@ -38,6 +38,16 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
     };
   }
 
+  if (barbellMode) {
+    if (plateWeight > 477.5) {
+      plateWeight = 477.5;
+    }
+  } else {
+    if (plateWeight > 500) {
+      plateWeight = 500;
+    }
+  }
+
   num45s = Math.floor(plateWeight / 45);
   plateWeight = plateWeight % 45;
 

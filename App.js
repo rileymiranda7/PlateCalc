@@ -112,7 +112,9 @@ export default function App() {
               </Text>
             </View>
             <View style={styles.inputRow}>
-              <Text style={{ color: "white", fontSize: 25, padding: 5 }}>
+              <Text
+                style={{ color: "white", fontSize: 25, paddingHorizontal: 5 }}
+              >
                 Barbell Mode:{" "}
               </Text>
               <Switch
@@ -123,6 +125,9 @@ export default function App() {
                 value={barbellMode}
               />
             </View>
+            <Text style={{ color: "white", fontSize: 13, textAlign: "left" }}>
+              {barbellMode ? "*Max weight 1000 lbs" : "*Max weight 500 lbs"}
+            </Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -133,7 +138,7 @@ export default function App() {
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
-    padding: 20,
+    paddingTop: 20,
     alignItems: "center",
   },
   input: {
@@ -148,6 +153,7 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
+    padding: 20,
   },
   weightsContainer: {
     flex: 1,
