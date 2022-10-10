@@ -21,36 +21,40 @@ import getNumPlates from "./helper/GetNumPlates";
 export default function App() {
   const [enteredWeight, setEnteredWeight] = useState(0);
   const [barbellMode, setBarbellMode] = useState(true);
+  const [useThirtyFives, setUseThirtyFives] = useState(false);
   const [fortyFiveArr, setFortyFiveArr] = useState([]);
+  const [thirtyFiveArr, setThirtyFiveArr] = useState([]);
   const [twentyFiveArr, setTwentyFiveArr] = useState([]);
   const [tenArr, setTenArr] = useState([]);
   const [fiveArr, setFiveArr] = useState([]);
   const [twoPointFiveArr, setTwoPointFiveArr] = useState([]);
 
   useEffect(() => {
-    console.log(enteredWeight);
     setFortyFiveArr([]);
+    setThirtyFiveArr([]);
     setTwentyFiveArr([]);
     setTenArr([]);
     setFiveArr([]);
     setTwoPointFiveArr([]);
     const {
       numFortyFives,
+      numThirtyFives,
       numTwentyFives,
       numTens,
       numFives,
       numTwoPointFives,
-    } = getNumPlates(enteredWeight, false, barbellMode);
-    console.log("45s: " + numFortyFives);
-    console.log("25s: " + numTwentyFives);
-    console.log("10s: " + numTens);
-    console.log("5s: " + numFives);
-    console.log("2.5s: " + numTwoPointFives);
+    } = getNumPlates(enteredWeight, useThirtyFives, barbellMode);
     let tempFfArr = [];
     for (let i = 0; i < numFortyFives; i++) {
       tempFfArr.push(1);
     }
     setFortyFiveArr([...tempFfArr]);
+
+    let tempThfArr = [];
+    for (let i = 0; i < numThirtyFives; i++) {
+      tempThfArr.push(1);
+    }
+    setThirtyFiveArr([...tempThfArr]);
 
     let tempTfArr = [];
     for (let i = 0; i < numTwentyFives; i++) {
@@ -75,7 +79,7 @@ export default function App() {
       tempTpfArr.push(1);
     }
     setTwoPointFiveArr([...tempTpfArr]);
-  }, [enteredWeight, barbellMode]);
+  }, [enteredWeight, barbellMode, useThirtyFives]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,6 +90,10 @@ export default function App() {
             {fortyFiveArr.map((_, index) => {
               return <FortyFive key={index} />;
             })}
+            {useThirtyFives &&
+              thirtyFiveArr.map((_, index) => {
+                return <ThirtyFive key={index} />;
+              })}
             {twentyFiveArr.map((_, index) => {
               return <TwentyFive key={index} />;
             })}
@@ -125,6 +133,20 @@ export default function App() {
                 value={barbellMode}
               />
             </View>
+            <View style={styles.inputRow}>
+              <Text
+                style={{ color: "white", fontSize: 25, paddingHorizontal: 5 }}
+              >
+                35 lbs plates:{" "}
+              </Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={useThirtyFives ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => setUseThirtyFives(!useThirtyFives)}
+                value={useThirtyFives}
+              />
+            </View>
             <Text style={{ color: "white", fontSize: 13, textAlign: "left" }}>
               {barbellMode ? "*Max weight 1000 lbs" : "*Max weight 500 lbs"}
             </Text>
@@ -153,7 +175,7 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 20,
+    padding: 10,
   },
   weightsContainer: {
     flex: 1,

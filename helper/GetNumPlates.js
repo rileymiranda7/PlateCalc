@@ -19,6 +19,7 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
   if (totalWeight == 0) {
     return {
       numFortyFives: num45s,
+      numThirtyFives: num35s,
       numTwentyFives: num25s,
       numTens: num10s,
       numFives: num5s,
@@ -31,6 +32,7 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
     // just bar or no weight
     return {
       numFortyFives: num45s,
+      numThirtyFives: num35s,
       numTwentyFives: num25s,
       numTens: num10s,
       numFives: num5s,
@@ -54,11 +56,28 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
   if (plateWeight == 0) {
     return {
       numFortyFives: num45s,
+      numThirtyFives: num35s,
       numTwentyFives: num25s,
       numTens: num10s,
       numFives: num5s,
       numTwoPointFives: numTwoPointFives,
     };
+  }
+
+  if (useThirtyFives) {
+    num35s = Math.floor(plateWeight / 35);
+    plateWeight = plateWeight % 35;
+
+    if (plateWeight == 0) {
+      return {
+        numFortyFives: num45s,
+        numThirtyFives: num35s,
+        numTwentyFives: num25s,
+        numTens: num10s,
+        numFives: num5s,
+        numTwoPointFives: numTwoPointFives,
+      };
+    }
   }
 
   num25s = Math.floor(plateWeight / 25);
@@ -67,6 +86,7 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
   if (plateWeight == 0) {
     return {
       numFortyFives: num45s,
+      numThirtyFives: num35s,
       numTwentyFives: num25s,
       numTens: num10s,
       numFives: num5s,
@@ -80,6 +100,7 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
   if (plateWeight == 0) {
     return {
       numFortyFives: num45s,
+      numThirtyFives: num35s,
       numTwentyFives: num25s,
       numTens: num10s,
       numFives: num5s,
@@ -93,6 +114,7 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
   if (plateWeight == 0) {
     return {
       numFortyFives: num45s,
+      numThirtyFives: num35s,
       numTwentyFives: num25s,
       numTens: num10s,
       numFives: num5s,
@@ -103,6 +125,7 @@ export default function getNumPlates(totalWeight, useThirtyFives, barbellMode) {
   numTwoPointFives = Math.floor(plateWeight / 2.5);
   return {
     numFortyFives: num45s,
+    numThirtyFives: num35s,
     numTwentyFives: num25s,
     numTens: num10s,
     numFives: num5s,

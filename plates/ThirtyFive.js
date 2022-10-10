@@ -12,7 +12,7 @@ export default function ThirtyFive() {
 
 const styles = StyleSheet.create({
   plate: {
-    backgroundColor: "#646464",
+    backgroundColor: "#01a11c",
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "black",
