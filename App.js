@@ -86,7 +86,7 @@ export default function App() {
       <StatusBar style="light" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ color: "white", fontSize: 25, paddingHorizontal: 5 }}>
+          <Text style={{ color: "white", fontSize: 25, paddingTop: "5%" }}>
             Riley's Plate Calculator
           </Text>
           <SafeAreaView style={styles.weightsContainer}>
