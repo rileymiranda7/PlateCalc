@@ -10,6 +10,8 @@ import {
   SafeAreaView,
   Switch,
 } from "react-native";
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 import FortyFive from "./plates/FortyFive";
 import ThirtyFive from "./plates/ThirtyFive";
 import TwentyFive from "./plates/TwentyFive";
@@ -28,6 +30,7 @@ export default function App() {
   const [tenArr, setTenArr] = useState([]);
   const [fiveArr, setFiveArr] = useState([]);
   const [twoPointFiveArr, setTwoPointFiveArr] = useState([]);
+  const [inputIsFocused, setInputIsFocused] = useState(false);
 
   useEffect(() => {
     setFortyFiveArr([]);
@@ -86,9 +89,12 @@ export default function App() {
       <StatusBar style="light" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ color: "white", fontSize: 25, paddingTop: "5%" }}>
-            Riley's Plate Calculator
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="barbell-outline" color="white" size={40} />
+            <Text style={{ color: "white", fontSize: 25, marginVertical: "5%" }}>
+              {" Riley's Plate Calculator"}
+            </Text>
+          </View>
           <SafeAreaView style={styles.weightsContainer}>
             {fortyFiveArr.map((_, index) => {
               return <FortyFive key={index} />;
@@ -111,48 +117,70 @@ export default function App() {
             })}
           </SafeAreaView>
           <View style={styles.inputContainer}>
-            <View style={styles.inputRow}>
+            <View style={{ flex: 1 }}>
+              <View style={styles.inputRow}>
+                <Text
+                  style={{ color: "white", fontSize: 20, paddingHorizontal: 5 }}
+                >
+                  Barbell Mode:{" "}
+                </Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  thumbColor={barbellMode ? "#f5dd4b" : "#f4f3f4"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={() => setBarbellMode(!barbellMode)}
+                  value={barbellMode}
+                />
+              </View>
+              <View style={styles.inputRow}>
+                <Text
+                  style={{ color: "white", fontSize: 20, paddingHorizontal: 5 }}
+                >
+                  35 lbs plates:{" "}
+                </Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  thumbColor={useThirtyFives ? "#f5dd4b" : "#f4f3f4"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={() => setUseThirtyFives(!useThirtyFives)}
+                  value={useThirtyFives}
+                />
+              </View>
+              <Text style={{ color: "white", fontSize: 13, textAlign: "center" }}>
+                {barbellMode ? "*Max weight 1000 lbs" : "*Max weight 500 lbs"}
+              </Text>
+            </View>
+            <View style={{
+              flexDirection: "row", 
+              minWidth: "42%",
+              maxWidth: "42%", 
+              justifyContent: "center",
+              padding: 10
+              }}
+            >
               <TextInput
-                style={styles.input}
+                style={[styles.input, inputIsFocused && {
+                  borderWidth: 2,
+                  borderColor: "white",
+                }]}
                 keyboardType="decimal-pad"
                 onChangeText={setEnteredWeight}
                 placeholder="ex. 135"
+                contextMenuHidden={true}
+                keyboardAppearance='dark'
+                maxLength={6}
+                selectTextOnFocus={true}
+                onFocus={() => {
+                  setInputIsFocused(!inputIsFocused);
+                }}
+                onBlur={() => {
+                  setInputIsFocused(!inputIsFocused);
+                }}
               />
-              <Text style={{ color: "white", fontSize: 30, padding: 5 }}>
+              <Text style={{ color: "white", fontSize: 20, padding: 5 }}>
                 lbs
               </Text>
             </View>
-            <View style={styles.inputRow}>
-              <Text
-                style={{ color: "white", fontSize: 25, paddingHorizontal: 5 }}
-              >
-                Barbell Mode:{" "}
-              </Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={barbellMode ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => setBarbellMode(!barbellMode)}
-                value={barbellMode}
-              />
-            </View>
-            <View style={styles.inputRow}>
-              <Text
-                style={{ color: "white", fontSize: 25, paddingHorizontal: 5 }}
-              >
-                35 lbs plates:{" "}
-              </Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={useThirtyFives ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => setUseThirtyFives(!useThirtyFives)}
-                value={useThirtyFives}
-              />
-            </View>
-            <Text style={{ color: "white", fontSize: 13, textAlign: "left" }}>
-              {barbellMode ? "*Max weight 1000 lbs" : "*Max weight 500 lbs"}
-            </Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -162,18 +190,17 @@ export default function App() {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: "center",
+    flex: 5,
+    flexDirection: "row",
   },
   input: {
     padding: 4,
     borderRadius: 6,
     backgroundColor: "gray",
     textAlign: "center",
-    fontSize: 30,
-    borderWidth: 2,
-    borderColor: "white",
+    fontSize: 25,
+    
+    maxHeight: "10%",
   },
   inputRow: {
     flexDirection: "row",
@@ -181,7 +208,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   weightsContainer: {
-    flex: 1,
+    flex: 3,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
